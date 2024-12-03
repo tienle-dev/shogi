@@ -13,7 +13,7 @@ public class MovePlate : MonoBehaviour
 
     //false: movement, true: attacking
     public bool attack = false;
-    //Tien ga non
+    //Tien ga non ga ga ga
     public void Start()
     {
         if (attack)
