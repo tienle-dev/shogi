@@ -13,13 +13,11 @@ public class PromotionManager : MonoBehaviour
         currentPiece = piece; // Lưu quân cờ hiện tại đang cần xử lý
         promotionPanel.SetActive(true);
     }
-
     public void ChoosePromoted()
     {
         currentPiece.Promote(true);
         promotionPanel.SetActive(false);
     }
-
     public void ChooseNormal()
     {
         currentPiece.Promote(false);
