@@ -1,0 +1,41 @@
+fileFormatVersion: 2
+guid: f44099a148cebae40bc7e86a3488613c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - controller: {instanceID: 0}
+  - movePlate: {fileID: 591847947676108760, guid: fb2049859238a0e4ab99619ee2da3f9f, type: 3}
+  - V_gote: {fileID: 21300000, guid: 3bc01522d13bc4a46952052f7c050c06, type: 3}
+  - X_gote: {fileID: 21300000, guid: 2c618d1b415f71f4ab7daf84fe3ca738, type: 3}
+  - plusX_gote: {fileID: 21300000, guid: 264df7c8a5790e24e91362c2a1964caa, type: 3}
+  - Tg_gote: {fileID: 21300000, guid: 7109e9172d45a69469c32659d5c6b21d, type: 3}
+  - plusTg_gote: {fileID: 21300000, guid: 4c037fbddb723344fbaabab0df6da086, type: 3}
+  - Vg_gote: {fileID: 21300000, guid: 04f1e2630ec844c42a7f474a17d32f3d, type: 3}
+  - B_gote: {fileID: 21300000, guid: c153f40c90a515d458a2a597947c28db, type: 3}
+  - plusS_gote: {fileID: 21300000, guid: a94ff50892b18ef44be905df54925740, type: 3}
+  - M_gote: {fileID: 21300000, guid: 4d6ad01bbd17b4145b1c8ba05015152b, type: 3}
+  - plusM_gote: {fileID: 21300000, guid: 3d81aedab5875654c8748cdfb9cf0707, type: 3}
+  - Th_gote: {fileID: 21300000, guid: 19c80d50310c24b43b1be5562c49cfab, type: 3}
+  - plusTh_gote: {fileID: 21300000, guid: 44bc5b480158432418b275dfb1249708, type: 3}
+  - T_gote: {fileID: 21300000, guid: e9f3a6acaa96ddf4f877743dc5419adc, type: 3}
+  - plusT_gote: {fileID: 21300000, guid: 7dabe3716fd97bf4db02f7aae9d1262f, type: 3}
+  - V_sente: {fileID: 21300000, guid: 2caa551763c55294ea955ab78b534df5, type: 3}
+  - X_sente: {fileID: 21300000, guid: 9664332e1a21af64889d9a9a008dcb11, type: 3}
+  - plusX_sente: {fileID: 21300000, guid: b1c393a1d278bd54a9e6088cc431fe61, type: 3}
+  - Tg_sente: {fileID: 21300000, guid: 07df03986ae62154c9e8375486fffbb7, type: 3}
+  - plusTg_sente: {fileID: 21300000, guid: 8daa1690100a77347ac63e7664af8cd9, type: 3}
+  - Vg_sente: {fileID: 21300000, guid: bf7a7d4e5c8662a4f90c31156c9d6315, type: 3}
+  - B_sente: {fileID: 21300000, guid: 5f2b6d4bee21fe24dbb0d7c0c961c6ab, type: 3}
+  - plusS_sente: {fileID: 21300000, guid: acd45f7bdeee6bd4fa67ec90c45befba, type: 3}
+  - M_sente: {fileID: 21300000, guid: 074529995633c3b4b9376e5e89cf931e, type: 3}
+  - plusM_sente: {fileID: 21300000, guid: 167461b09dd6b7042b904cd67e593621, type: 3}
+  - Th_sente: {fileID: 21300000, guid: c2270dedc9221cc4680bb751ef4d7c97, type: 3}
+  - plusTh_sente: {fileID: 21300000, guid: 6342c44db45f4b944b8f10d9e1862b94, type: 3}
+  - T_sente: {fileID: 21300000, guid: 7ea699e4a02ba4c44b037e88a08057f4, type: 3}
+  - plusT_sente: {fileID: 21300000, guid: 1b750887fedb7544897802512bc2ffe6, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
