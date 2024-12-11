@@ -13,7 +13,6 @@ public class MovePlate : MonoBehaviour
 
     //false: movement, true: attacking
     public bool attack = false;
-    public bool check = false;
 
     public void Update()
     {
@@ -32,23 +31,21 @@ public class MovePlate : MonoBehaviour
         controller = GameObject.FindGameObjectWithTag("GameController");
         if (attack)
         {
+            // Lấy quân cờ bị tấn công
             GameObject sp = controller.GetComponent<Game>().GetPosition(matrixX, matrixY);
-            if (sp.name == "V_gote")
+
+            if (sp != null) // Nếu có quân cờ tại vị trí bị tấn công
             {
-                // Kiểm tra xem Gote có bị checkmate không
-                if (controller.GetComponent<Game>().CheckMate("Gote", controller.GetComponent<Game>().positions))
+                // Chuyển quân cờ bị tấn công vào Drop (bảng trưng bày)
+                GameObject dropManager = GameObject.FindGameObjectWithTag("Sente"); // DropManager quản lý Drop
+                if (dropManager != null)
                 {
-                    controller.GetComponent<Game>().Winner("Sente");
+                    dropManager.GetComponent<Move>().HandleAttack(sp); // Chuyển quân cờ bị bắt vào Drop
                 }
+
+                // Ẩn quân cờ bị tấn công (không xóa hoàn toàn)
+                sp.SetActive(false);
             }
-            else if (sp.name == "V_sente")
-            {
-                if (controller.GetComponent<Game>().CheckMate("Sente", controller.GetComponent<Game>().positions))
-                {
-                    controller.GetComponent<Game>().Winner("Gote");
-                }
-            }
-            Destroy(sp);
         }
 
         controller.GetComponent<Game>().SetPositionEmpty(reference.GetComponent<ShogiMan>().getXBoard(),

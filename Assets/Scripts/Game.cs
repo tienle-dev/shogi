@@ -17,6 +17,7 @@ public class Game : MonoBehaviour
     public GameObject[,] positions = new GameObject[9, 9];
     private GameObject[] playerGote = new GameObject[20];
     private GameObject[] playerSente = new GameObject[20];
+
     public GameObject controller;
 
     private string currentPlayer = "Sente";
@@ -27,12 +28,24 @@ public class Game : MonoBehaviour
     {
         playerSente = new GameObject[]
         {
-Create("V_sente",4,0), Create("X_sente",3,0),Create("X_sente",5,0),Create("X_sente",8,7)
+Create("Th_sente",0,0 ), Create("M_sente",1,0),Create("B_sente",2,0), Create("Vg_sente",3,0),
+Create("V_sente",4,0), Create("Vg_sente",5,0), Create("B_sente",6,0), Create("M_sente",7,0),
+Create("Th_sente",8,0), Create("Tg_sente",1,1), Create("X_sente",7,1), Create("T_sente",0,2),
+Create("T_sente",1,2), Create("T_sente",2,2), Create("T_sente",3,2), Create("T_sente",4,2),
+Create("T_sente",5,2), Create("T_sente",6,2), Create("T_sente",7,2), Create("T_sente",8,2)
         };
         playerGote = new GameObject[]
         {
-Create("V_gote",4,8)
+Create("Th_gote",0,8 ), Create("M_gote",1,8),Create("B_gote",2,8), Create("Vg_gote",3,8),
+Create("V_gote",4,8), Create("Vg_gote",5,8), Create("B_gote",6,8), Create("M_gote",7,8),
+Create("Th_gote",8,8), Create("Tg_gote",7,7), Create("X_gote",1,7),Create("T_gote",0,6),
+Create("T_gote",1,6), Create("T_gote",2,6), Create("T_gote",3,6), Create("T_gote",4,6),
+Create("T_gote",5,6), Create("T_gote",6,6), Create("T_gote",7,6), Create("T_gote",8,6)
         };
+        //Drop = new GameObject[]
+        //{
+        //    Create("Th_sente",0,-1 ), Create("M_sente",1,-1),Create("B_sente",2,-1), Create("Vg_sente",3,-1)
+        //};
         for (int i = 0; i < playerSente.Length; i++)
         {
             SetPosition(playerSente[i]);

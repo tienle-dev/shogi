@@ -107,226 +107,6 @@ public class ShogiMan : MonoBehaviour
             DisplayMove(this);
         }
     }
-    public void DestroyMovePlates()
-    {
-        GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
-        for (int i = 0; i < movePlates.Length; i++)
-        {
-            Destroy(movePlates[i]);
-        }
-    }
-    public List<(int, int)> InitiateMovePlates()
-    {
-        List<(int, int)> validMoves = new List<(int, int)>();
-        switch (this.name)
-        {
-            case "V_gote":
-            case "V_sente":
-                validMoves.AddRange(SurroundMovePlate());
-                break;
-            case "X_gote":
-            case "X_sente":
-                validMoves.AddRange(LineMovePlate(1, 0));
-                validMoves.AddRange(LineMovePlate(0, 1));
-                validMoves.AddRange(LineMovePlate(-1, 0));
-                validMoves.AddRange(LineMovePlate(0, -1));
-                break;
-            case "Tg_gote":
-            case "Tg_sente":
-                validMoves.AddRange(LineMovePlate(1, 1));
-                validMoves.AddRange(LineMovePlate(-1, 1));
-                validMoves.AddRange(LineMovePlate(1, -1));
-                validMoves.AddRange(LineMovePlate(-1, -1));
-                break;
-            case "plusTg_gote":
-            case "plusTg_sente":
-                validMoves.AddRange(BishopPlusMovePlate());
-                break;
-            case "plusX_gote":
-            case "plusX_sente":
-                validMoves.AddRange(RookPlusMovePlate()); // Quân xe phong cấp
-                break;
-            case "Vg_gote":
-            case "Vg_sente":
-            case "plusT_gote":
-            case "plusT_sente":
-            case "plusS_sente":
-            case "plusS_gote":
-            case "plusM_gote":
-            case "plusM_sente":
-            case "plusTh_gote":
-            case "plusTh_sente":
-                validMoves.AddRange(GoldMovePlate());
-                break;
-            case "B_gote":
-            case "B_sente":
-                validMoves.AddRange(SilverMovePlate());
-                break;
-            case "M_gote":
-            case "M_sente":
-                validMoves.AddRange(LMovePlate());
-                break;
-            case "Th_gote":
-            case "Th_sente":
-                validMoves.AddRange(LineMovePlate(0, 1));
-                validMoves.AddRange(LineMovePlate(0, -1));
-                break;
-            case "T_gote":
-                validMoves.AddRange(Pawn2MovePlate());
-                break;
-            case "T_sente":
-                validMoves.AddRange(Pawn1MovePlate());
-                break;
-        }
-        return validMoves;
-    }
-    public List<(int, int)> LineMovePlate(int xIncrement, int yIncrement)
-    {
-        List<(int, int)> moves = new List<(int, int)>();
-        Game sc = controller.GetComponent<Game>();
-
-        int x = xBoard + xIncrement;
-        int y = yBoard + yIncrement;
-
-        while (sc.PositionOnBoard(x, y))
-        {
-            GameObject targetPiece = sc.GetPosition(x, y);
-
-            // Nếu ô trống
-            if (targetPiece == null)
-            {
-                // Chỉ spawn MovePlate nếu nước đi hợp lệ
-                if (sc.AllowedMove(sc.positions, (xBoard, yBoard), (x, y), player))
-                {
-                    Debug.Log("Position is empty at: (" + x + ", " + y + ")");
-                    moves.Add((x, y));
-                }
-            }
-            // Nếu gặp một quân cờ
-            else
-            {
-                ShogiMan shogiMan = targetPiece.GetComponent<ShogiMan>();
-
-                // Nếu là quân của đối thủ
-                if (shogiMan != null && shogiMan.player != player)
-                {
-                    // Chỉ spawn MovePlateAttack nếu nước đi hợp lệ
-                    if (sc.AllowedMove(sc.positions, (xBoard, yBoard), (x, y), player))
-                    {
-                        moves.Add((x, y));
-                    }
-                }
-                // Dừng vòng lặp nếu gặp bất kỳ quân cờ nào (đồng minh hoặc đối thủ)
-                break;
-            }
-
-            // Tiếp tục di chuyển trên đường đi
-            x += xIncrement;
-            y += yIncrement;
-        }
-        return moves;
-    }
-    public List<(int, int)> BishopPlusMovePlate()
-    {
-        List<(int, int)> moves = new List<(int, int)>();
-        moves.AddRange(LineMovePlate(1, 1));
-        moves.AddRange(LineMovePlate(-1, 1));
-        moves.AddRange(LineMovePlate(1, -1));
-        moves.AddRange(LineMovePlate(-1, -1));
-        moves.AddRange(PointMovePlate(xBoard + 1, yBoard));
-        moves.AddRange(PointMovePlate(xBoard - 1, yBoard));
-        moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
-        moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
-        return moves;
-    }
-    public List<(int, int)> RookPlusMovePlate()
-    {
-        List<(int, int)> moves = new List<(int, int)>();
-        // Nước đi của xe
-        moves.AddRange(LineMovePlate(1, 0));  // Đi ngang phải
-        moves.AddRange(LineMovePlate(-1, 0)); // Đi ngang trái
-        moves.AddRange(LineMovePlate(0, 1));  // Đi dọc lên
-        moves.AddRange(LineMovePlate(0, -1)); // Đi dọc xuống
-
-        // Kết hợp thêm nước đi của vua
-        moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1)); // Chéo trên phải
-        moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1)); // Chéo dưới phải
-        moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1)); // Chéo trên trái
-        moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1)); // Chéo dưới trái
-        return moves;
-    }
-    public List<(int, int)> SilverMovePlate()
-    {
-        List<(int, int)> moves = new List<(int, int)>();
-        if (player == "Sente")
-        {
-            moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1));
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
-        }
-        else
-        {
-            moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1));
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
-        }
-        return moves;
-    }
-    public List<(int, int)> GoldMovePlate()
-    {
-        List<(int, int)> moves = new List<(int, int)>();
-        if (player == "Sente")
-        {
-            moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
-            moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 0));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1));
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 0));
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
-        }
-        else
-        {
-            moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
-            moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 0));
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1));
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 0));
-        }
-        return moves;
-    }
-    public List<(int, int)> LMovePlate()
-    {
-        List<(int, int)> moves = new List<(int, int)>();
-        if (player == "Sente")
-        {
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 2));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 2));
-        }
-        if (player == "Gote")
-        {
-            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 2));
-            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 2));
-        }
-        return moves;
-    }
-    public List<(int, int)> SurroundMovePlate()
-    {
-        List<(int, int)> moves = new List<(int, int)>();
-        moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
-        moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
-        moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1));
-        moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 0));
-        moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1));
-        moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1));
-        moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 0));
-        moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
-        return moves;
-    }
     public List<(int, int)> Pawn1MovePlate()
     {
         List<(int, int)> moves = new List<(int, int)>();
@@ -626,4 +406,225 @@ public class ShogiMan : MonoBehaviour
             // Giữ nguyên trạng thái
         }
     }
+    public void DestroyMovePlates()
+    {
+        GameObject[] movePlates = GameObject.FindGameObjectsWithTag("MovePlate");
+        for (int i = 0; i < movePlates.Length; i++)
+        {
+            Destroy(movePlates[i]);
+        }
+    }
+    public List<(int, int)> InitiateMovePlates()
+    {
+        List<(int, int)> validMoves = new List<(int, int)>();
+        switch (this.name)
+        {
+            case "V_gote":
+            case "V_sente":
+                validMoves.AddRange(SurroundMovePlate());
+                break;
+            case "X_gote":
+            case "X_sente":
+                validMoves.AddRange(LineMovePlate(1, 0));
+                validMoves.AddRange(LineMovePlate(0, 1));
+                validMoves.AddRange(LineMovePlate(-1, 0));
+                validMoves.AddRange(LineMovePlate(0, -1));
+                break;
+            case "Tg_gote":
+            case "Tg_sente":
+                validMoves.AddRange(LineMovePlate(1, 1));
+                validMoves.AddRange(LineMovePlate(-1, 1));
+                validMoves.AddRange(LineMovePlate(1, -1));
+                validMoves.AddRange(LineMovePlate(-1, -1));
+                break;
+            case "plusTg_gote":
+            case "plusTg_sente":
+                validMoves.AddRange(BishopPlusMovePlate());
+                break;
+            case "plusX_gote":
+            case "plusX_sente":
+                validMoves.AddRange(RookPlusMovePlate()); // Quân xe phong cấp
+                break;
+            case "Vg_gote":
+            case "Vg_sente":
+            case "plusT_gote":
+            case "plusT_sente":
+            case "plusS_sente":
+            case "plusS_gote":
+            case "plusM_gote":
+            case "plusM_sente":
+            case "plusTh_gote":
+            case "plusTh_sente":
+                validMoves.AddRange(GoldMovePlate());
+                break;
+            case "B_gote":
+            case "B_sente":
+                validMoves.AddRange(SilverMovePlate());
+                break;
+            case "M_gote":
+            case "M_sente":
+                validMoves.AddRange(LMovePlate());
+                break;
+            case "Th_gote":
+            case "Th_sente":
+                validMoves.AddRange(LineMovePlate(0, 1));
+                validMoves.AddRange(LineMovePlate(0, -1));
+                break;
+            case "T_gote":
+                validMoves.AddRange(Pawn2MovePlate());
+                break;
+            case "T_sente":
+                validMoves.AddRange(Pawn1MovePlate());
+                break;
+        }
+        return validMoves;
+    }
+    public List<(int, int)> LineMovePlate(int xIncrement, int yIncrement)
+    {
+        List<(int, int)> moves = new List<(int, int)>();
+        Game sc = controller.GetComponent<Game>();
+
+        int x = xBoard + xIncrement;
+        int y = yBoard + yIncrement;
+
+        while (sc.PositionOnBoard(x, y))
+        {
+            GameObject targetPiece = sc.GetPosition(x, y);
+
+            // Nếu ô trống
+            if (targetPiece == null)
+            {
+                // Chỉ spawn MovePlate nếu nước đi hợp lệ
+                if (sc.AllowedMove(sc.positions, (xBoard, yBoard), (x, y), player))
+                {
+                    Debug.Log("Position is empty at: (" + x + ", " + y + ")");
+                    moves.Add((x, y));
+                }
+            }
+            // Nếu gặp một quân cờ
+            else
+            {
+                ShogiMan shogiMan = targetPiece.GetComponent<ShogiMan>();
+
+                // Nếu là quân của đối thủ
+                if (shogiMan != null && shogiMan.player != player)
+                {
+                    // Chỉ spawn MovePlateAttack nếu nước đi hợp lệ
+                    if (sc.AllowedMove(sc.positions, (xBoard, yBoard), (x, y), player))
+                    {
+                        moves.Add((x, y));
+                    }
+                }
+                // Dừng vòng lặp nếu gặp bất kỳ quân cờ nào (đồng minh hoặc đối thủ)
+                break;
+            }
+
+            // Tiếp tục di chuyển trên đường đi
+            x += xIncrement;
+            y += yIncrement;
+        }
+        return moves;
+    }
+    public List<(int, int)> BishopPlusMovePlate()
+    {
+        List<(int, int)> moves = new List<(int, int)>();
+        moves.AddRange(LineMovePlate(1, 1));
+        moves.AddRange(LineMovePlate(-1, 1));
+        moves.AddRange(LineMovePlate(1, -1));
+        moves.AddRange(LineMovePlate(-1, -1));
+        moves.AddRange(PointMovePlate(xBoard + 1, yBoard));
+        moves.AddRange(PointMovePlate(xBoard - 1, yBoard));
+        moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
+        moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
+        return moves;
+    }
+    public List<(int, int)> RookPlusMovePlate()
+    {
+        List<(int, int)> moves = new List<(int, int)>();
+        // Nước đi của xe
+        moves.AddRange(LineMovePlate(1, 0));  // Đi ngang phải
+        moves.AddRange(LineMovePlate(-1, 0)); // Đi ngang trái
+        moves.AddRange(LineMovePlate(0, 1));  // Đi dọc lên
+        moves.AddRange(LineMovePlate(0, -1)); // Đi dọc xuống
+
+        // Kết hợp thêm nước đi của vua
+        moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1)); // Chéo trên phải
+        moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1)); // Chéo dưới phải
+        moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1)); // Chéo trên trái
+        moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1)); // Chéo dưới trái
+        return moves;
+    }
+    public List<(int, int)> SilverMovePlate()
+    {
+        List<(int, int)> moves = new List<(int, int)>();
+        if (player == "Sente")
+        {
+            moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1));
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
+        }
+        else
+        {
+            moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1));
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
+        }
+        return moves;
+    }
+    public List<(int, int)> GoldMovePlate()
+    {
+        List<(int, int)> moves = new List<(int, int)>();
+        if (player == "Sente")
+        {
+            moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
+            moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 0));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1));
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 0));
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
+        }
+        else
+        {
+            moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
+            moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 0));
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1));
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 0));
+        }
+        return moves;
+    }
+    public List<(int, int)> LMovePlate()
+    {
+        List<(int, int)> moves = new List<(int, int)>();
+        if (player == "Sente")
+        {
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 2));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 2));
+        }
+        if (player == "Gote")
+        {
+            moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 2));
+            moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 2));
+        }
+        return moves;
+    }
+    public List<(int, int)> SurroundMovePlate()
+    {
+        List<(int, int)> moves = new List<(int, int)>();
+        moves.AddRange(PointMovePlate(xBoard, yBoard + 1));
+        moves.AddRange(PointMovePlate(xBoard, yBoard - 1));
+        moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 1));
+        moves.AddRange(PointMovePlate(xBoard - 1, yBoard - 0));
+        moves.AddRange(PointMovePlate(xBoard - 1, yBoard + 1));
+        moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 1));
+        moves.AddRange(PointMovePlate(xBoard + 1, yBoard - 0));
+        moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
+        return moves;
+    }
+    
 }
