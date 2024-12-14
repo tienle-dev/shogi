@@ -626,5 +626,93 @@ public class ShogiMan : MonoBehaviour
         moves.AddRange(PointMovePlate(xBoard + 1, yBoard + 1));
         return moves;
     }
-    
+    /*
+    public List<(int, int)> InitiateDropMovePlates()
+    {
+        List<(int, int)> validMoves = new List<(int, int)>();
+
+        // Lấy trạng thái bàn cờ hiện tại (giả sử bạn có `GameManager` quản lý bàn cờ)
+        
+
+        for (int x = 0; x < 9; x++) // Bàn cờ shogi có kích thước 9x9
+        {
+            for (int y = 0; y < 9; y++)
+            {
+                // Kiểm tra ô (x, y) có trống không
+                if (board[x, y] == null) // `null` đại diện cho ô trống
+                {
+                    // Kiểm tra các quy tắc đặc biệt cho từng loại quân
+                    switch (this.name)
+                    {
+                        case "T_sente":
+                        case "T_gote":
+                            if (IsValidPawnDrop(x, y, board)) // Kiểm tra quy tắc thả quân tốt
+                            {
+                                validMoves.Add((x, y));
+                            }
+                            break;
+                        case "X_sente":
+                        case "X_gote":
+                        case "Tg_sente":
+                        case "Tg_gote":
+                        case "Th_sente":
+                        case "Th_gote":
+                        case "M_sente":
+                        case "M_gote":
+                        case "B_sente":
+                        case "B_gote":
+                        case "Vg_sente":
+                        case "Vg_gote":
+                            if (IsSafeMove(x, y)) // Kiểm tra không bị chiếu sau khi thả
+                            {
+                                validMoves.Add((x, y));
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+        return validMoves;
+    }
+
+    // Hàm kiểm tra quy tắc thả quân tốt
+    private bool IsValidPawnDrop(int x, int y, GameObject[,] board)
+    {
+        // Kiểm tra xem cùng cột có quân tốt nào của phe hiện tại không
+        for (int i = 0; i < 9; i++)
+        {
+            if (board[x, i] != null && board[x, i].name == this.name) // Tốt cùng phe
+            {
+                return false;
+            }
+        }
+
+        // Thêm điều kiện kiểm tra không thả tốt vào hàng cuối (tốt không thể tiến lên được nữa)
+        if ((this.name == "T_sente" && y == 0) || (this.name == "T_gote" && y == 8))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    // Hàm kiểm tra an toàn (vua không bị chiếu sau khi thả quân)
+    private bool IsSafeMove(int x, int y)
+    {
+        Game sc = controller.GetComponent<Game>();
+        // Giả sử bạn có một hàm kiểm tra chiếu trong GameManager
+        // Tạo thử trạng thái mới của bàn cờ sau khi thả quân
+        GameObject[,] copyBoard = new GameObject[board.GetLength(0), board.GetLength(1)];
+        for (int i = 0; i < board.GetLength(0); i++)
+        {
+            for (int j = 0; j < board.GetLength(1); j++)
+            {
+                copyBoard[i, j] = board[i, j];
+            }
+        }
+        copyBoard[x, y] = this.gameObject; // Thả quân vào vị trí giả lập
+
+        return !sc.CheckBoard(copyBoard,player); // Kiểm tra vua có bị chiếu không
+    }
+    */
 }

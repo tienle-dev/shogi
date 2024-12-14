@@ -14,6 +14,9 @@ public class MovePlate : MonoBehaviour
     //false: movement, true: attacking
     public bool attack = false;
 
+    //tha quan co
+    public bool isDrop = false;
+
     public void Update()
     {
 
@@ -24,6 +27,11 @@ public class MovePlate : MonoBehaviour
         if (attack)
         {
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
+        }
+        else if (isDrop)
+        {
+            // Nếu là ô để thả quân, tô màu xanh lam
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 1.0f, 0.5f);
         }
     }
     public void OnMouseUp()
@@ -36,15 +44,38 @@ public class MovePlate : MonoBehaviour
 
             if (sp != null) // Nếu có quân cờ tại vị trí bị tấn công
             {
-                // Chuyển quân cờ bị tấn công vào Drop (bảng trưng bày)
-                GameObject dropManager = GameObject.FindGameObjectWithTag("Sente"); // DropManager quản lý Drop
-                if (dropManager != null)
-                {
-                    dropManager.GetComponent<Move>().HandleAttack(sp); // Chuyển quân cờ bị bắt vào Drop
-                }
 
-                // Ẩn quân cờ bị tấn công (không xóa hoàn toàn)
-                sp.SetActive(false);
+                // Kiểm tra nếu quân bị ăn là Vua
+                if (sp.name == "V_gote") controller.GetComponent<Game>().Winner("Sente");
+                if (sp.name == "V_sente") controller.GetComponent<Game>().Winner("Gote");
+
+                if(sp.name == "X_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusX_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "Tg_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusTg_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "B_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusS_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "M_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusM_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "Th_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusTh_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "T_sente") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusT_sente") controller.GetComponent<Game>().GetName(sp.name);
+
+                if (sp.name == "X_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusX_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "Tg_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusTg_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "B_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusS_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "M_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusM_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "Th_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusTh_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "T_gote") controller.GetComponent<Game>().GetName(sp.name);
+                if (sp.name == "plusT_gote") controller.GetComponent<Game>().GetName(sp.name);
+
+                Destroy(sp); // Xóa quân bị ăn
             }
         }
 

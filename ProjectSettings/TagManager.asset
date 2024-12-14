@@ -8,6 +8,7 @@ TagManager:
   - WinnerText
   - WinnerPanel
   - Sente
+  - X_sente
   layers:
   - Default
   - TransparentFX

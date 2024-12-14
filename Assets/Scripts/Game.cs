@@ -24,6 +24,8 @@ public class Game : MonoBehaviour
 
     private bool gameover = false;
 
+    private bool capturePiece = false;
+
     void Start()
     {
         playerSente = new GameObject[]
@@ -83,6 +85,43 @@ Create("T_gote",5,6), Create("T_gote",6,6), Create("T_gote",7,6), Create("T_gote
     {
         return x >= 0 && x < 9 && y >= 0 && y < 9;
     }
+
+    public void GetName(string pieceName)
+    {
+        Debug.Log("Captured piece: " + pieceName);
+        if (pieceName == "Vg_sente") pieceName = "Vg_gote";
+        if (pieceName == "Vg_gote") pieceName = "Vg_sente";
+        if (pieceName == "X_sente") pieceName = "X_gote";
+        if (pieceName == "plusX_sente") pieceName = "X_gote";
+        if (pieceName == "Tg_sente") pieceName = "Tg_gote";
+        if (pieceName == "plusTg_sente") pieceName = "Tg_gote";
+        if (pieceName == "Th_sente") pieceName = "Th_gote";
+        if (pieceName == "plusTh_sente") pieceName = "Th_gote";
+        if (pieceName == "M_sente") pieceName = "M_gote";
+        if (pieceName == "plusM_sente") pieceName = "M_gote";
+        if (pieceName == "B_sente") pieceName = "B_gote";
+        if (pieceName == "plusS_sente") pieceName = "B_gote";
+        if (pieceName == "T_sente") pieceName = "T_gote";
+        if (pieceName == "plusT_sente") pieceName = "T_gote";
+
+        if (pieceName == "Vg_gote") pieceName = "Vg_sente";
+        if (pieceName == "Vg_sente") pieceName = "Vg_gote";
+        if (pieceName == "X_gote") pieceName = "X_sente";
+        if (pieceName == "plusX_gote") pieceName = "X_sente";
+        if (pieceName == "Tg_gote") pieceName = "Tg_sente";
+        if (pieceName == "plusTg_gote") pieceName = "Tg_sente";
+        if (pieceName == "Th_gote") pieceName = "Th_sente";
+        if (pieceName == "plusTh_gote") pieceName = "Th_sente";
+        if (pieceName == "M_gote") pieceName = "M_sente";
+        if (pieceName == "plusM_gote") pieceName = "M_sente";
+        if (pieceName == "B_gote") pieceName = "B_sente";
+        if (pieceName == "plusS_gote") pieceName = "B_sente";
+        if (pieceName == "T_gote") pieceName = "T_sente";
+        if (pieceName == "plusT_gote") pieceName = "T_sente";
+
+        Debug.Log("Changes piece:" +  pieceName);
+    }
+
     public string GetCurrentPlayer()
     {
         return currentPlayer;
@@ -117,7 +156,7 @@ Create("T_gote",5,6), Create("T_gote",6,6), Create("T_gote",7,6), Create("T_gote
             gameover = false;
             SceneManager.LoadScene("Game");
         }
-
+        /*
         // Kiểm tra nếu vua bị chiếu và in thông báo
         if (CheckBoard(positions, currentPlayer))
         {
@@ -127,7 +166,7 @@ Create("T_gote",5,6), Create("T_gote",6,6), Create("T_gote",7,6), Create("T_gote
         if (CheckMate(currentPlayer, positions))
         {
             Debug.Log("Chieu Het!!!");
-        }
+        }*/
     }
     public void Winner(string playerWinner)
     {
@@ -500,7 +539,7 @@ Create("T_gote",5,6), Create("T_gote",6,6), Create("T_gote",7,6), Create("T_gote
             }
         }
         state.Append($"{player}");
-        Debug.Log("Generated State: " + state.ToString());
+        //Debug.Log("Generated State: " + state.ToString());
         return state.ToString();
     }
     public bool FourfoldRepition(string player, GameObject[,] board)

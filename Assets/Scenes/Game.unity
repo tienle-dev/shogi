@@ -2268,6 +2268,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740862933}
   m_CullTransparentMesh: 1
+--- !u!1 &771266584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 771266586}
+  - component: {fileID: 771266585}
+  m_Layer: 0
+  m_Name: Drop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &771266585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771266584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 448c2599dc0a5d64abb62fac387b7cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShogiPiece: {fileID: 9150647476006620831, guid: e53fff4fd62f45643937466cf8c8259e, type: 3}
+  X_sente: {fileID: 893263128}
+  Tg_sente: {fileID: 1099507977}
+  Th_sente: {fileID: 781263065}
+  M_sente: {fileID: 349095163}
+  B_sente: {fileID: 556869207}
+  Vg_sente: {fileID: 469892024}
+  T_sente: {fileID: 1575380550}
+  X_gote: {fileID: 24485518}
+  Tg_gote: {fileID: 423848740}
+  Th_gote: {fileID: 1447999289}
+  M_gote: {fileID: 1386181822}
+  B_gote: {fileID: 1222949096}
+  Vg_gote: {fileID: 1868610520}
+  T_gote: {fileID: 56422042}
+--- !u!4 &771266586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 771266584}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2124304, y: 0.007958626, z: 90.00001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &781263063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2627,7 +2686,7 @@ GameObject:
   - component: {fileID: 893263128}
   m_Layer: 5
   m_Name: X_sente
-  m_TagString: Untagged
+  m_TagString: X_sente
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2695,7 +2754,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 893263129}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 771266585}
+        m_TargetAssemblyTypeName: ButtonDrop, Assembly-CSharp
+        m_MethodName: OnButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &893263129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4705,6 +4776,7 @@ SceneRoots:
   - {fileID: 1670921511}
   - {fileID: 208050865}
   - {fileID: 520478898}
+  - {fileID: 771266586}
   - {fileID: 352072755}
   - {fileID: 519420032}
   - {fileID: 1752373788}
